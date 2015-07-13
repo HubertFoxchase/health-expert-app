@@ -1,0 +1,48 @@
+md-toolbar h1 {
+  font-size: 1.250em;
+  font-weight: 400;
+  margin: auto;
+}
+
+md-toolbar .toolbar-button {
+	font-size: 0.8em;
+}
+
+h3.questionLabel {
+	text-align: center;
+}
+
+.form-container {
+	width:300px; 
+	min-height:180px
+}
+
+.button-med, .form-item-med {
+	min-width: 12.5em;
+}
+
+.button-med {
+	padding: 10px !important;
+}
+
+.button-lg {
+	min-width: 15em;
+	padding: 15px;
+}
+
+
+.restartBtnContainer {
+  margin: auto 16px;
+  position: absolute;
+  right: 0px;
+  top: 16px;
+}
+
+.attribution {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-size: 95%;
+  background: #eee;
+  padding: 5px 10px;
+}

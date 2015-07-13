@@ -1,0 +1,11 @@
+<md-content md-scroll-y layout="column" layout-align="center center" layout-margin layout-padding flex>
+	<div layout="column" layout-align="space-between" layout-margin flex >
+		
+		<h3 class="questionLabel">What is your main complaint?</h3>
+
+	   	<md-button  ng-repeat="g in groupsOfSymptoms" flex class="md-raised md-primary button-med" ng-click="setInitialSymptoms($index, g.symptoms)">
+	    	{{g.name}}
+	   	</md-button>
+
+	</div>      
+</md-content>
