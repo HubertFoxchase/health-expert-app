@@ -50,7 +50,7 @@ angular.module("controllers", []).
 					$rootScope.progress = 0;
 					$rootScope.outcome = null;
 					
-					location.hash = "/start";
+					location.hash = "/list";
 				}
 			);
 		}		
@@ -71,14 +71,38 @@ angular.module("controllers", []).
 						$rootScope.session = null;
 						$rootScope.patient = null;
 						$rootScope.progress = 0;
-						location.hash = "/start";
+						location.hash = "/list";
 					}
 				}
 			);
 		}
 		
 	}]).
+	controller("PatientCtrl", ['$scope', '$rootScope',  '$routeParams', '$api', "$location", "$mdDialog", function($scope, $rootScope, $routeParams, $api, $location, $mdDialog){
 
+		var _api = $api.get();
+
+		var loadPatients = function(){
+			_api.patient.list({organisation:$rootScope.organisation.id}).execute(function(resp){
+				$scope.patients = resp.items;
+				$scope.$apply()
+			});
+		}
+
+		loadPatients();
+		
+		$rootScope.patient = null;
+		
+		$scope.selectPatient = function(patient, $event) {
+			$rootScope.patient = patient;
+			$rootScope.progress = 15;
+			location.hash = "/" + patient.id + "/reason";
+	    };
+	    
+		document.getElementById("main").style.visibility = "visible";
+		document.getElementById("progress").style.display = "none";
+		
+	}]).
 	controller("StartCtrl", ['$scope', '$rootScope',  '$routeParams', '$api', "$location", "$mdDialog", "groupsOfSymptoms", function($scope, $rootScope, $routeParams, $api, $location, $mdDialog, groupsOfSymptoms){
 		
 		var _api = $api.get();
@@ -113,7 +137,7 @@ angular.module("controllers", []).
 		
 		$scope.start = function(ref){
 			console.log("start");
-			_api.patient.insert({ref:ref, organisation:"6192449487634432"}).execute(function(resp){
+			_api.patient.insert({ref:ref, organisation_id:$rootScope.organisation.id}).execute(function(resp){
 				$rootScope.progress = 5;
 				$rootScope.patient = {id:resp.id, ref:ref};
 				//location.hash = "/" + resp.id + "/intro";
