@@ -8,6 +8,7 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
+    <preference name="webView" value="org.crosswalk.engine.XWalkWebViewEngine" />
     <allow-intent href="market:*" />
     <preference name="Fullscreen" value="true" />
     <preference name="KeepRunning" value="false" />

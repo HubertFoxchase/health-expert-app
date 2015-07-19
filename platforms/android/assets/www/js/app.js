@@ -1,14 +1,23 @@
 'use strict';
 
 angular.module('c4c', ['ngMaterial', 'ngMdIcons', 'ngRoute', 'controllers', 'services', 'values', 'ngCordovaOauth'])
-.value('config', {
+.value('$config', {
       clientId     : '817202020074-1b97ag04r8rhfj6r40bocobupn92g5bj.apps.googleusercontent.com',
       scope        : [ 'https://www.googleapis.com/auth/userinfo.email' ],
-      apiUrl	   : 'https://health-expert-1705.appspot.com'
+      apiUrl	   : 'https://health-expert-1705.appspot.com',
+      organisation : {id: "5722646637445120", name : "C4C"}
 })
 .config(['$routeProvider', '$locationProvider',
 function($routeProvider, $locationProvider) {
 	$routeProvider
+		.when('/list', {
+			templateUrl: 'templates/list.html',
+			controller: 'PatientCtrl',
+			resolve : { init: ['$api', function($api) {
+		          	return $api.load();
+	        	}]
+			}
+		})
 		.when('/start', {
 			templateUrl: 'templates/start.html',
 			controller: 'StartCtrl',
@@ -98,7 +107,7 @@ function($routeProvider, $locationProvider) {
 			}
 		})
 	    .otherwise({
-	          redirectTo: '/start'
+	          redirectTo: '/list'
 	    });		
 
     //$locationProvider.html5Mode({enabled: true,requireBase:false});
@@ -115,16 +124,18 @@ function($routeProvider, $locationProvider) {
         });
     };
 })
-.run(["$rootScope", "$location", 
-      function ($rootScope, $location) {
+.run(["$rootScope", "$location", function ($rootScope, $location) {
 	
     	$rootScope.$on('$routeChangeSuccess', function(){
     		ga('send', 'pageview', $location.path());
     	});
     	
     	document.addEventListener("backbutton", function(){
-    		if(location.hash == "#/start") {
+    		if(location.indexOf("/list") > 0 || location.hash.indexOf("/end") > 0) {
     			navigator.app.exitApp();
+    		}
+    		else if (location.indexOf("/start") > 0){
+    			return true;
     		}
     		else {
     			return false;

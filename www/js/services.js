@@ -55,7 +55,6 @@ factory('$api',  ['$q', '$config', '$cordovaOauth', '$rootScope', function ($q, 
         	    //gapi.load('auth', {'callback': checkAuth});
 	            return deferred.promise;
     		}
-            
     	},
     	
     	handleAuthClick : function (event) {

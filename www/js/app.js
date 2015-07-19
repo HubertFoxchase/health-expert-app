@@ -124,16 +124,18 @@ function($routeProvider, $locationProvider) {
         });
     };
 })
-.run(["$rootScope", "$location", 
-      function ($rootScope, $location) {
+.run(["$rootScope", "$location", function ($rootScope, $location) {
 	
     	$rootScope.$on('$routeChangeSuccess', function(){
     		ga('send', 'pageview', $location.path());
     	});
     	
     	document.addEventListener("backbutton", function(){
-    		if(location.hash == "#/start") {
+    		if(location.hash.indexOf("/list") > 0 || location.hash.indexOf("/end") > 0) {
     			navigator.app.exitApp();
+    		}
+    		else if (location.hash.indexOf("/start") > 0){
+    			return true;
     		}
     		else {
     			return false;

@@ -2,14 +2,14 @@
 
 angular.module('services', []).
 
-factory('$api',  ['$q', 'config', '$cordovaOauth', function ($q, config, $cordovaOauth) {
+factory('$api',  ['$q', '$config', '$cordovaOauth', '$rootScope', function ($q, $config, $cordovaOauth, $rootScope) {
 
 	var deferred = $q.defer();
 	var _api = null;
 	
-    var clientId = config.clientId,
-    	apiUrl = config.apiUrl,
-        scopes = config.scope;
+    var clientId = $config.clientId,
+    	apiUrl = $config.apiUrl,
+        scopes = $config.scope;
     
 	var checkAuth = function() {
 
@@ -35,9 +35,9 @@ factory('$api',  ['$q', 'config', '$cordovaOauth', function ($q, config, $cordov
     }      
 
     var apiReady = function() {
-    	
         if (gapi.client.c4c) {
         	_api = gapi.client.c4c;
+			$rootScope.organisation = $config.organisation;
             deferred.resolve(_api);
         } 
         else {
@@ -47,9 +47,15 @@ factory('$api',  ['$q', 'config', '$cordovaOauth', function ($q, config, $cordov
     
     return {
     	load : function() {
-        	gapi.load('client', {'callback': clientReady});
-    	    //gapi.load('auth', {'callback': checkAuth});
-            return deferred.promise;
+    		if(_api) {
+	            deferred.resolve(_api);
+    		}
+    		else {
+            	gapi.load('client', {'callback': clientReady});
+        	    //gapi.load('auth', {'callback': checkAuth});
+	            return deferred.promise;
+    		}
+            
     	},
     	
     	handleAuthClick : function (event) {
