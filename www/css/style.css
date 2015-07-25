@@ -39,6 +39,19 @@ h3.questionLabel {
   top: 16px;
 }
 */
+
+#main, #left {
+	visibility: hidden;
+}
+
+body.app-ready #progress {
+	display: none;
+}
+
+body.app-ready #main, body.app-ready #left {
+	visibility: visible;
+}
+
 p.explainer {
 	font-style: italic;
 	color: #9e9e9e	

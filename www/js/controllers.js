@@ -98,8 +98,7 @@ angular.module("controllers", []).
 			location.hash = "/" + patient.id + "/reason";
 	    };
 	    
-		document.getElementById("main").style.visibility = "visible";
-		document.getElementById("progress").style.display = "none";
+	    $rootScope.readyClass = "app-ready";
 		
 	}]).
 	controller("StartCtrl", ['$scope', '$rootScope',  '$routeParams', '$api', "$location", "$mdDialog", "groupsOfSymptoms", function($scope, $rootScope, $routeParams, $api, $location, $mdDialog, groupsOfSymptoms){
@@ -212,8 +211,7 @@ angular.module("controllers", []).
 			}
 		}		
 
-		document.getElementById("main").style.visibility = "visible";
-		document.getElementById("progress").style.display = "none";
+	    $rootScope.readyClass = "app-ready";
 
 	}]).	
 	

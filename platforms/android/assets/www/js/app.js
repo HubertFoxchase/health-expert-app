@@ -131,10 +131,10 @@ function($routeProvider, $locationProvider) {
     	});
     	
     	document.addEventListener("backbutton", function(){
-    		if(location.indexOf("/list") > 0 || location.hash.indexOf("/end") > 0) {
+    		if(location.hash.indexOf("/list") > 0 || location.hash.indexOf("/end") > 0) {
     			navigator.app.exitApp();
     		}
-    		else if (location.indexOf("/start") > 0){
+    		else if (location.hash.indexOf("/start") > 0){
     			return true;
     		}
     		else {
