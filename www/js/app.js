@@ -1,14 +1,21 @@
 'use strict';
 
-angular.module('c4c', ['ngMaterial', 'ngMdIcons', 'ngRoute', 'controllers', 'services', 'values', 'ngCordovaOauth'])
+angular.module('c4c', ['ngMaterial', 'ngMdIcons', 'ngRoute', 'controllers', 'services', 'values'])
 .value('$config', {
       clientId     : '817202020074-1b97ag04r8rhfj6r40bocobupn92g5bj.apps.googleusercontent.com',
-      scope        : [ 'https://www.googleapis.com/auth/userinfo.email' ],
-      apiUrl	   : 'https://health-expert-1705.appspot.com',
-      organisation : {id: "5722646637445120", name : "C4C"}
+      scope        : [ 'https://www.googleapis.com/auth/userinfo.email' ]
 })
-.config(['$routeProvider', '$locationProvider',
-function($routeProvider, $locationProvider) {
+.config(function($mdThemingProvider) {
+
+})
+.config(['$routeProvider', '$locationProvider', '$mdThemingProvider',
+function($routeProvider, $locationProvider, $mdThemingProvider) {
+	
+	$mdThemingProvider
+		.theme('default')
+		.primaryPalette('indigo')
+	    .accentPalette('pink');	
+	
 	$routeProvider
 		.when('/list', {
 			templateUrl: 'templates/list.html',
@@ -84,7 +91,7 @@ function($routeProvider, $locationProvider) {
 		})	
 		.when('/:session/end', {
 			templateUrl: 'templates/end.html',
-			controller: 'QuestionsCtrl',
+			controller: 'EndCtrl',
 			resolve : { init: ['$api', function($api) {
 	          	return $api.load();
 	        	}]
@@ -112,18 +119,6 @@ function($routeProvider, $locationProvider) {
 
     //$locationProvider.html5Mode({enabled: true,requireBase:false});
 }])
-.directive('myClick', function() {
-    return function(scope, element, attrs) {
-        element.bind('click', function(event) {
-        	
-            event.preventDefault();
-            event.stopPropagation();
-
-            if(!element[0].disabled)
-            	scope.$apply(attrs['myClick']);
-        });
-    };
-})
 .run(["$rootScope", "$location", function ($rootScope, $location) {
 	
     	$rootScope.$on('$routeChangeSuccess', function(){

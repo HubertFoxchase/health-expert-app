@@ -1,45 +1,3 @@
-/*
-md-toolbar h1 {
-  font-size: 1.250em;
-  font-weight: 400;
-  margin: auto;
-}
-
-md-toolbar .toolbar-button {
-	font-size: 0.8em;
-}
-
-h3.questionLabel {
-	text-align: center;
-}
-
-.form-container {
-	width:300px; 
-	min-height:180px
-}
-
-.button-med, .form-item-med {
-	min-width: 12.5em;
-}
-
-.button-med {
-	padding: 10px !important;
-}
-
-.button-lg {
-	min-width: 15em;
-	padding: 15px;
-}
-
-
-.restartBtnContainer {
-  margin: auto 16px;
-  position: absolute;
-  right: 0px;
-  top: 16px;
-}
-*/
-
 #main {
 	visibility: hidden;
 }
@@ -119,14 +77,14 @@ md-toolbar {
 }
 
 .key-pad > div {
-    width: 320px;
-    padding: 5px;
+    width: 290px;
+    padding: 4px;
 }
 
 .key-pad > div .md-fab {
-	width:80px;
-	height: 80px;
-	font-size: 42px;
+	width:70px;
+	height: 70px;
+	font-size: 38px;
 	font-weight: 200;
 }
 
