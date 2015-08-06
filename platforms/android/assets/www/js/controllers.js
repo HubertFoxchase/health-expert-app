@@ -19,7 +19,7 @@ angular.module("controllers", []).
 	        });
 	    }
 
-		$scope.start = function ($event) {
+		$scope.start1 = function ($event) {
 	        $mdDialog.show({
 	          targetEvent: $event,
 	          template:
@@ -37,6 +37,47 @@ angular.module("controllers", []).
 	            controller: 'AppCtrl'
 	        });
 	    }
+		
+		var pin = "";
+		$scope.display = "";
+		$scope.pinError = false;
+		
+		$scope.pinpadKeyPress = function(num){
+			pin = pin + "" + num;
+			$scope.display += "*";
+			$scope.pinError = false;
+		}
+
+		$scope.pinpadClear = function(num){
+			pin = "";
+			$scope.display = "";
+			$scope.pinError = false;
+		}
+
+		$scope.pinpadCheck = function(){
+			if(pin == "1234"){
+				$scope.newSession();
+			}
+			else {
+				pin = "";
+				$scope.display = "";				
+				$scope.pinError = true;
+			}
+		}
+		
+		$scope.start = function ($event) {
+			
+			pin = "";
+			$scope.display = "";
+			$scope.pinError = false;
+			
+	        $mdDialog.show({
+	          targetEvent: $event,
+	          templateUrl: 'templates/pinpad.html',
+	          parent: angular.element(document.body),
+	          controller: 'AppCtrl'
+	        });
+	    }		
 		
 		$scope.closeDialog = function(){
 			$mdDialog.hide();
@@ -98,8 +139,7 @@ angular.module("controllers", []).
 			location.hash = "/" + patient.id + "/reason";
 	    };
 	    
-		document.getElementById("main").style.visibility = "visible";
-		document.getElementById("progress").style.display = "none";
+	    $rootScope.readyClass = "app-ready";
 		
 	}]).
 	controller("StartCtrl", ['$scope', '$rootScope',  '$routeParams', '$api', "$location", "$mdDialog", "groupsOfSymptoms", function($scope, $rootScope, $routeParams, $api, $location, $mdDialog, groupsOfSymptoms){
@@ -212,14 +252,18 @@ angular.module("controllers", []).
 			}
 		}		
 
-		document.getElementById("main").style.visibility = "visible";
-		document.getElementById("progress").style.display = "none";
-
+	    $rootScope.readyClass = "app-ready";
 	}]).	
+
+	controller("EndCtrl", ['$scope', '$rootScope',  "$location", function($scope, $rootScope, $location){
+
+		$rootScope.progress = 100;
+	    $rootScope.readyClass = "app-ready";
+		
+	}]).
+	
 	
 	controller("QuestionsCtrl", ['$scope', '$rootScope',  '$routeParams', '$api', "$location", function($scope, $rootScope, $routeParams, $api, $location){
-		
-		console.log("question");
 		
 		var _api = $api.get();
 
@@ -227,9 +271,7 @@ angular.module("controllers", []).
 			$scope.session = $rootScope.session;
 			$scope.step = 1;
 			
-			document.getElementById("main").style.visibility = "visible";
-			document.getElementById("progress").style.display = "none";
-			
+		    $rootScope.readyClass = "app-ready";
 		}
 		else {
 			_api.session.get({id:$routeParams.session}).execute(function(resp){
@@ -237,8 +279,7 @@ angular.module("controllers", []).
 				$rootScope.patient = resp.patient;
 				$rootScope.progress = 25; //this is a recovered session, we can set progress to 25%
 
-				document.getElementById("main").style.visibility = "visible";
-				document.getElementById("progress").style.display = "none";
+			    $rootScope.readyClass = "app-ready";
 				
 				if(resp.outcome){
 					var p = resp.outcome.probability * 100;
@@ -299,7 +340,7 @@ angular.module("controllers", []).
 					
 					_api.session.end({id:$rootScope.session.id}).execute(function(resp){
 						$rootScope.session = resp
-						$rootScope.progress = 100;
+						//$rootScope.progress = 100;
 						location.hash = "/" + resp.id + "/end";
 					});
 				}

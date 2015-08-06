@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('c4c', ['ngMaterial', 'ngMdIcons', 'ngRoute', 'controllers', 'services', 'values'])
+angular.module('c4c', ['ngMaterial', 'ngMdIcons', 'ngRoute', 'controllers', 'services', 'values', 'ngCordovaOauth'])
 .value('$config', {
       clientId     : '817202020074-1b97ag04r8rhfj6r40bocobupn92g5bj.apps.googleusercontent.com',
-      scope        : [ 'https://www.googleapis.com/auth/userinfo.email' ]
+      scope        : [ 'https://www.googleapis.com/auth/userinfo.email' ],
+      apiUrl	   : 'https://health-expert-1705.appspot.com',
+      organisation : {id: "5722646637445120", name : "C4C"}        
 })
 .config(function($mdThemingProvider) {
 
